@@ -2,7 +2,8 @@
     <?php 
         session_start();
         
-        include './config/conn.php';
+        include dirname(__dir__) . '/config/wep.php';
+        include BASE_PATH . '/config/conn.php';
     ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,4 +33,5 @@
                 break;
         }
     ?>
+    <script src="./assets/js/sweetAleart2/node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
 </head>

@@ -1,0 +1,76 @@
+.container-login {
+    display: flex;
+    justify-content: center;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+.card-login {
+    width: 30%;
+    height: 430px;
+    background-color: white;
+    border-radius: 10px;
+}
+.card-login h2 {
+    text-align: center;
+    padding-top: 15px;
+    font-size: 50px;
+    color: blue;
+    margin: 0px;
+}
+.card-login .input-container {
+    padding-left: 50px;
+    padding-right: 50px;
+    font-size: 19px;
+}
+.card-login .input-container fieldset {
+    border-radius: 8px;
+    border-color: blue;
+}
+.card-login .input-container legend {
+    color: blue
+}
+.card-login .input-container input {
+    border: none;
+    
+    font-size: 16px;
+}
+.card-login .input-container input:focus {
+    outline: none;
+}
+.card-login button {
+    display: block;
+    margin: 0 auto;
+    cursor: pointer;
+    font-size: 20px;
+    color: white;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-top: 20px;
+    border-radius: 5px;
+    border: none;
+    background-color: #008CBA;
+}
+.card-login .with-line {
+    display: block;
+    text-align: center;
+    color: blue;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.card-login .with-line:before,
+.with-line:after {
+    content: "";
+    display: inline-block;
+    border-top: 1px solid blue;
+    width: 3em;
+    vertical-align: middle;
+    margin: 0 0.5em;
+}
+
+.card-login p{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    text-align: center;
+}

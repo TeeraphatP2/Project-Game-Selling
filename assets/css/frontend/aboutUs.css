@@ -1,0 +1,7 @@
+.container-about-us {
+    background-color: white;
+}
+
+.container-about-us .container-right img{
+    max-width: 100%;
+}
