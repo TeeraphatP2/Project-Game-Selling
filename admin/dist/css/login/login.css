@@ -1,0 +1,96 @@
+* {
+    margin: 0;
+    padding: 0;
+    
+}
+html {
+    height: 100%;
+}
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100%;
+}
+.container-login-admin {
+    height: 500px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    /* background-color: blue; */
+}
+
+.container-login-admin .card-login {
+    display: flex;
+    flex-direction: column;
+    height: 400px;
+    width: 400px;
+    border: 1px solid #999;
+    border-radius: 20px;
+    /* background-color: red; */
+}
+
+.container-login-admin .card-login h2{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 50px;
+}
+.container-login-admin .card-login .input-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.container-login-admin .card-login .input-container form{
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 19px;
+    /* background-color: gray; */
+    
+}
+
+.card-login .input-container form fieldset{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: none;
+}
+.card-login .input-container form input {
+    height: 30px;
+    width: 100%;
+    font-size: 16px;
+    border-radius: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 1px solid #999;
+}
+
+.card-login .input-container form button{
+    width: 100%;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 19px;
+    background-color: #0375f0;
+}
+
+.card-login .input-container form button:hover{
+    background-color: #0069D9;
+}
+
+h3 {
+    text-align: center;
+    color: red;
+}
