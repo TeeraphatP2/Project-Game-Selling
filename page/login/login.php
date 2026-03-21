@@ -1,19 +1,7 @@
 <div class="container-login">
     <div class="card-login">
         <h2>ล็อคอิน</h2>
-        <?php
-        if (isset($_SESSION['error'])) { 
-        ?>
-        <h3>
-                <?php
-                echo $_SESSION['error'];
-                unset($_SESSION['error']);
-                ?>        
-            </h3>
-        <?php }elseif(isset($_SESSION['success'])){ echo $_SESSION['success']; session_destroy();} 
-        ?>
-        
-        <form action="./action/login_db.php" method="POST">
+        <form onsubmit="login(event)">
             <div class="input-container">
                 <fieldset>
                     <legend for="email">Email</legend>
@@ -21,7 +9,7 @@
                 </fieldset>
                 <fieldset>
                     <legend for="password">รหัสผ่าน</legend>
-                    <input type="password" name="password" id="password" require>
+                    <input type="password" name="password" id="password" autocomplete="off" require>
                 </fieldset>
             </div>
             <button type="submit">ล็อคอิน</button>
@@ -30,3 +18,4 @@
         </form>
     </div>
 </div>
+<script src="<?= BASE_URL ?>./assets/scripts/login.js"></script>
