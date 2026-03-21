@@ -10,6 +10,7 @@ $data = json_decode($input, true);
 
 $email = $data['email'];
 $password = $data['password'];
+
 if(empty($email) && empty($password)){
     echo json_encode(["massage" => "กรุณากรอกข้อมูลให้ครบทุกช่อง"]);
     die();
@@ -27,7 +28,6 @@ $stmt_query_check_email = $conn->prepare($query_check_email);
 $stmt_query_check_email->bindParam(':email', $email, PDO::PARAM_STR);
 $stmt_query_check_email->execute();
 $call_back_check_email = $stmt_query_check_email->fetch(PDO::FETCH_ASSOC);
-//echo json_encode(["massage" => $call_back_check_email, "email"=> $email]);
 if($call_back_check_email['email'] == $email){
     $hash = $call_back_check_email['password'];
 
