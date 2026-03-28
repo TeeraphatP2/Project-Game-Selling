@@ -37,12 +37,12 @@
 
                 <fieldset>
                     <legend for="password">รหัสผ่าน</legend>
-                    <input type="password" name="password" id="password" required>
+                    <input type="password" name="password" id="password" autocomplete="off" required>
                 </fieldset>
 
                 <fieldset>
                     <legend for="cpassword">ยืนยันรหัสผ่าน</legend>
-                    <input type="password" name="cpassword" id="cpassword" required>
+                    <input type="password" name="cpassword" id="cpassword" autocomplete="off" required>
                 </fieldset>
                 <a href="#">ลืมรหัสผ่าน?</a><br>
             </div>
