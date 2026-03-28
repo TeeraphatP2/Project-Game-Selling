@@ -18,4 +18,4 @@
         </form>
     </div>
 </div>
-<script src="<?= BASE_URL ?>./assets/scripts/login.js"></script>
+<script src="<?= BASE_URL ?>./assets/js/scripts/login.js"></script>
