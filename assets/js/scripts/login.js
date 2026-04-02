@@ -3,7 +3,7 @@ async function login(event) {
   email    = document.getElementById("email").value;
   password = document.getElementById("password").value.trim();
   try {
-    let response = await fetch("./action/login_db.php", {
+    let response = await fetch("./controllers/auth/login_db.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
