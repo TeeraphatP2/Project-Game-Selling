@@ -3,7 +3,7 @@ async function login(event) {
   email    = document.getElementById("email").value;
   password = document.getElementById("password").value.trim();
   try {
-    let response = await fetch("./controllers/auth/login_db.php", {
+    let response = await fetch("./api.php?action=login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -20,21 +20,25 @@ async function login(event) {
     }
 
     let data = await response.json();
-    if(data.status == "success"){
-      window.location.href = `./`;
-      console.log(data);
+
+    if(!data.status){
+      return Swal.fire({
+        icon: "warning",
+        title: `${data.message}`
+      })
     }
 
-    swal.fire({
-        icon: "error",
-        title: data.massage
-      });
-
+    Swal.fire({
+      title: "Drag me!",
+      icon: "success",
+      title: data.message
+    });
+  
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
     swal.fire({
       icon: "error",
-      title: `${error.status}`
+      title: `${error}`
     })
   }
 }
