@@ -4,23 +4,12 @@
 <body>
     <?php include './includes/navbar.php'; ?>
     <main class="layout-main">
-        <?php
-        $page = $_GET['page'] ?? "";
-        switch ($page) {
-            case '':
-                include './page/homepage.php';
-                break;
-            case 'about';
-                include './page/about.php';
-                break;
-            case 'login':
-                include './page/login/login.php';
-                break;
-            case 'register':
-                include './page/register/register.php';
-                break;
-        }
+        <?php 
+        // require './helpers/dd.php';
         ?>
+        
+        <?php require './routes/web.php'?>
+
     </main>
     <?php include './includes/footer.php'; ?>
 </body>
