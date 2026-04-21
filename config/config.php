@@ -1,13 +1,21 @@
 <?php
 
-return [
-    'database' => [
-        'host' => 'localhost',
-        'port' => 3306,
-        'dbname' => 'game_selling_db',
-        'charset' => 'utf8mb4'
-    ]
-];
+namespace App\Config;
+
+class Config
+{
+    public function getConfigDatabase()
+    {
+        return [
+            'database' => [
+                'host' => 'localhost',
+                'port' => 3306,
+                'dbname' => 'game_selling_db',
+                'charset' => 'utf8mb4'
+            ]
+        ];
+    }
+}
 
 
 
