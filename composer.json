@@ -1,0 +1,21 @@
+{
+    "name": "user/game_selling_website",
+    "description": "composer for project game sellig",
+    "authors": [
+        {
+            "name": "TeeraphatP2",
+            "email": "teerapat200001@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\Controllers\\": "controllers/",
+            "App\\Services\\": "services/",
+            "App\\Repositories\\": "repositories/",
+            "App\\Database\\": "database/",
+            "App\\Config\\": "config/",
+            "App\\Helpers\\": "helpers/"
+        }
+    },
+    "require": {}
+}

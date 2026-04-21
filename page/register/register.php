@@ -4,26 +4,9 @@
     </div>
     <div class="card-right">
         <h2>สมัครสมาชิก</h2>
-        <?php
-        if (isset($_SESSION['error'])) { ?>
-            <h3>
-                <?php 
-                    echo $_SESSION['error'];
-                    unset($_SESSION['error']);
-                ?>        
-            </h3>
-        <?php } ?>
-        <form action="./action/register_db.php" method="post">
+        
+        <form novalidate onsubmit="register(event)" method="post">
             <div class="input-container">
-                <fieldset>
-                    <legend for="username">ชื่อผู้ใช้</legend>
-                    <input type="text" name="username" id="username" required>
-                </fieldset>
-
-                <fieldset>
-                    <legend for="email">Email</legend>
-                    <input type="text" name="email" id="email" required>
-                </fieldset>
 
                 <fieldset>
                     <legend for="firstname">ชื่อ</legend>
@@ -33,6 +16,12 @@
                 <fieldset>
                     <legend for="lastname">นามสกุล</legend>
                     <input type="text" name="lastname" id="lastname" required>
+                </fieldset>
+
+                <p class="email-wrong-format" id="emailWrongFormat">รูปแบบอีเมลไม่ถูกต้อง</p>
+                <fieldset>
+                    <legend for="email">Email</legend>
+                    <input type="text" name="email" id="email" required>
                 </fieldset>
 
                 <fieldset>
@@ -52,3 +41,4 @@
         </form>
     </div>
 </div>
+<script src="./assets/js/scripts/register.js"></script>
