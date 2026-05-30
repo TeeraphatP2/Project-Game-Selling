@@ -1,35 +1,51 @@
 <?php
-require dirname(__DIR__) . '/vendor/autoload.php';
+// เรียกใช้ package dotEnv
+$dotenv             = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->load();
 
-use App\Config\Web;
+// use App\Config\Web;
 use App\Database\Connection;
 use App\Config\Config;
 use App\Controllers\Auth\AuthController;
 use App\Repositories\UserRepository;
 use App\Services\AuthService;
 use App\Config\Container;
+use App\Services\JwtService;
+use App\Helpers\ExceptionHandler;
+// ตรวจและส่ง Exception
+set_exception_handler([ExceptionHandler::class, 'handle']);
 
-$container = new Container();
+$container          = new Container();
 
-$container->bind('App\Database\Connection', function() {
-    $config = (new Config)->getConfigDatabase();
+// เก็บการเรียกใช้ connect database
+$container->bind(Connection::class, function() {
+    $config         = (new Config)->getConfigDatabase();
     return (new Connection($config['database']))->getConnection();
 });
 
-$container->bind('App\Repositories\UserRepository', function() use($container) {
-    $connection = $container->resolve('App\Database\Connection');
+// เก็บการเรียกใช้ UserRepository
+$container->bind(UserRepository::class, function() use($container) {
+    $connection     = $container->resolve(Connection::class);
     return new UserRepository($connection);
 });
 
-$container->bind('App\Services\AuthService', function() use($container) {
-    $userRepo = $container->resolve('App\Repositories\UserRepository');
-    return new AuthService($userRepo);
+// เก็บการเรียกใช้ JwtService
+$container->bind(JwtService::class, function() {
+    return new JwtService();
 });
 
-$container->bind('App\Controllers\Auth\AuthController', function() use($container) {
-    $authService = $container->resolve('App\Services\AuthService');
+// เก็บการเรียกใช้ AuthService
+$container->bind(AuthService::class, function() use($container) {
+    $userRepo       = $container->resolve(UserRepository::class);
+    $jwtService     = $container->resolve(JwtService::class);
+    return new AuthService($userRepo, $jwtService);
+});
+
+// เก็บการเรียกใช้ AuthService
+$container->bind(AuthController::class, function() use($container) {
+    $authService    = $container->resolve('App\Services\AuthService');
     return new AuthController($authService);
 });
 
-Web::setContainer($container);
 
+// Web::setContainer($container);

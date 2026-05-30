@@ -8,15 +8,14 @@ Class Connection {
     private \PDO $pdo;
 
     public function __construct(array $config){
-        // $config = (new Config())->getConfigDatabase();
         $dsn = 'mysql:'. http_build_query($config, '', ';');
         try{
             $this->pdo = new \PDO($dsn, 'root', '');
         }catch(\PDOException $e){
-            echo 'Connection Failed' . $e->getMessage();    
-        // return $e->getMessage();
+            
+            throw new \PDOException('CONNECT_DATABASE_ERROR', previous: $e);
+            //throw new \RuntimeException('CONNECT_DATABASE_ERROR', 0, $e);
         }
-        
     }
 
     // public static function getInstance():self {

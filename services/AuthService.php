@@ -1,57 +1,58 @@
 <?php
 namespace App\Services;
 
-
-
 Class AuthService{
 
-    private $userRepo;
+    private \App\Repositories\UserRepository $userRepo;
+    private \App\Services\JwtService $jwtService;
 
-    public function __construct($userRepo) {
-        $this->userRepo = $userRepo;
+    public function __construct(\App\Repositories\UserRepository $userRepo, \App\Services\JwtService $jwtService) {
+        $this->userRepo             = $userRepo;
+        $this->jwtService           = $jwtService;
     }
 
-    public function login(string $email, string $password){
-        $user = $this->userRepo->findByEmail($email);
+    // ระบบล็อคอิน
+    public function login(string $email, string $password): array
+    {
+        $user                       = $this->userRepo->findByEmail($email);
 
-        if(isset($user['message']) === 'PDO_EXCEPTION_ERROR'){
-            return $user;
-        }
-
-        if($user['email'] === $email){
-            $hash = $user['password'];
-            if(password_verify($password, $hash)){
-                return ['message'=> 'LOGIN_SUCCESS', 'data' => $user];
-            }else{
-                return ['message' => 'INVALID_PASSWORD'];
-            }
-
-        }else{
+        if($user === null){
+            
             return ['message' => 'EMAIL_NOT_FOUND'];
         }
+        $hash = $user['password'];
+        if(!password_verify($password, $hash)){
+            return ['message' => 'INVALID_PASSWORD'];
+            
+        }
+        return ['message'   => 'LOGIN_SUCCESS', 'data' => [$this->jwtService->createAccessToken([
+            'sub' => $user['userId'],
+            'iss' => 'GameSelling',
+            'aud' => $user['firstname']
+            ]), $this->jwtService->createRefreshToken($user['userId'])]];
     }
 
-    public function register(array $userData){
-        $firstname = $userData['firstname'];
-        $lastname = $userData['lastname'];
-        $email = $userData['email'];
-        $password = $userData['password'];
+    // ระบบสมัครสมาชิก
+    public function register(array $userData): array
+    {
+        $firstname                  = $userData['firstname'];
+        $lastname                   = $userData['lastname'];
+        $email                      = $userData['email'];
+        $password                   = $userData['password'];
 
-        $algo = PASSWORD_BCRYPT;
-                
+        $algo                       = PASSWORD_BCRYPT;       
         $options = [
-            // Increase the bcrypt cost from 12 to 13.
-            'cost' => 13,
+        // Increase the bcrypt cost from 12 to 13.
+            'cost'                  => 13,
         ];
+        $passwordHash               = password_hash($password, $algo, $options);
+        
+        // เรียก query
+        $userRegister               = $this->userRepo->userRegister($firstname, $lastname, $email, $passwordHash);
 
-        $passwordHash = password_hash($password, $algo, $options);
-
-        $userRegister = $this->userRepo->userRegister($firstname, $lastname, $email, $passwordHash);
         if(!$userRegister){
-            return ['message' => 'EMAIL_IS_ALREADY_IN_SYSTEM'];
-        }else{
-            return ['message' => 'REGISTER_SUCCESS'];
+            return ['message'       => 'EMAIL_IS_ALREADY_IN_SYSTEM'];
         }
-
+        return ['message'       => 'REGISTER_SUCCESS'];
     }
 }

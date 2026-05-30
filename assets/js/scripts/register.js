@@ -1,13 +1,13 @@
 async function register(event){
     event.preventDefault();
-    const firstname = document.getElementById('firstname').value;
-    const lastname = document.getElementById('lastname').value;
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value.trim();
-    const cpassword = document.getElementById('cpassword').value.trim();
-    const emailWrongFormat = document.getElementById('emailWrongFormat');
+    const firstname         = document.getElementById('firstname').value;
+    const lastname          = document.getElementById('lastname').value;
+    const email             = document.getElementById('email').value.trim();
+    const password          = document.getElementById('password').value.trim();
+    const cpassword         = document.getElementById('cpassword').value.trim();
+    const emailWrongFormat  = document.getElementById('emailWrongFormat');
 
-    const checkEmailFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const checkEmailFormat  = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if(!checkEmailFormat.test(email)) {
         emailWrongFormat.classList.add('show');
@@ -17,7 +17,7 @@ async function register(event){
     emailWrongFormat.classList.remove('show');
 
     try{
-        const response = await fetch('./api.php?action=register', {
+        const response      = await fetch('./api.php?action=register', {
         method: 'POST',
         headers: {
         "Content-Type": "application/json",
@@ -31,14 +31,14 @@ async function register(event){
         })
     })
 
-    let data = await response.json();
-
+    let data                = await response.json();
     console.log(data.message);
-    swal.fire({
-        icon: 'warning',
-        title: 'Warning',
-        text: data.message
-    })
+    
+    Swal.fire({
+      title: "Drag me!",
+      icon: "success",
+      title: data.message
+    });
     
     }catch(error){
         swal.fire({

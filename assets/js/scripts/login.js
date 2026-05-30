@@ -1,9 +1,9 @@
 async function login(event) {
   event.preventDefault();
-  email    = document.getElementById("email").value;
-  password = document.getElementById("password").value.trim();
+  email           = document.getElementById("email").value;
+  password        = document.getElementById("password").value.trim();
   try {
-    let response = await fetch("./api.php?action=login", {
+    let response  = await fetch("./api.php?action=login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -20,7 +20,7 @@ async function login(event) {
     }
 
     let data = await response.json();
-
+    console.log(data.message, data.data);
     if(!data.status){
       return Swal.fire({
         icon: "warning",
@@ -33,7 +33,7 @@ async function login(event) {
       icon: "success",
       title: data.message
     });
-  
+    
   } catch (error) {
     console.log(error.message);
     swal.fire({
