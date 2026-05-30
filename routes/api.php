@@ -1,19 +1,25 @@
 <?php
+use App\Helpers\Response;
 
+// เก็บ request method
 $method = $_SERVER['REQUEST_METHOD'];
 
-$action = parse_url($_SERVER['REQUEST_URI'])['query'];
+// เก็บ query server
+parse_str(parse_url($_SERVER['REQUEST_URI'])['query'], $params);
+$action = $params['action'] ?? '';
 
+// เก็บ class
 $routes = [
     'POST' => [
-        'action=login' => fn() => $container->resolve('App\Controllers\Auth\AuthController')->login(),
-        'action=register' => fn() => $container->resolve('App\Controllers\Auth\AuthController')->register()
+        'login' => fn() => $container->resolve('App\Controllers\Auth\AuthController')->login(),
+        'register' => fn() => $container->resolve('App\Controllers\Auth\AuthController')->register()
     ]
 ];
 
+// เรียกใช้งาน class
 if (isset($routes[$method][$action])) {
     $routes[$method][$action]();
     
 } else {
-    echo json_encode(['status' => false, 'message' => 'Route not found']);
+    Response::error('ROUTE_NOT_FOUND');
 }
