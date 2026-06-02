@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: "Google Sans";
+    src: url("./font/GoogleSans-Variable.ttf") format("truetype");
+}
+
+@theme {
+    --font-display: "Google Sans";
+}
+
+@layer base {
+    body {
+        font-family: var(--font-display);
+    }
+}
