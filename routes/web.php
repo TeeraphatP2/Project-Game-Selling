@@ -5,7 +5,7 @@ $page                = parse_url($_SERVER['REQUEST_URI'])['query'] ?? '';
 
 $router = [
     ''               => './views/homepage.php',
-    'views=about'     => './views/about.php',
+    'views=about'    => './views/about.php',
     'views=login'    => './views/login/login.php',
     'views=register' => './views/register/register.php'
 ];
