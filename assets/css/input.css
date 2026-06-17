@@ -7,6 +7,7 @@
 
 @theme {
     --font-display: "Google Sans";
+    --color-layout: #1d204a;
 }
 
 @layer base {
