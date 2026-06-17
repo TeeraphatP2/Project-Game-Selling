@@ -1,3 +1,5 @@
 vendor/
 todo.txt
 .env
+node_modules/
+assets/css/output.css

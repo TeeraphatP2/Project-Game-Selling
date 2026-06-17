@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="h-full" lang="en">
 <?php include './includes/head.php'; ?>
-<body>
+<body class="flex flex-col min-h-full">
     <?php include './includes/navbar.php'; ?>
-    <main class="layout-main">
+    <main class="grow">
         <?php 
         // require './helpers/dd.php';
         ?>
