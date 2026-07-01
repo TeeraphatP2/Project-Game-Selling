@@ -1,7 +1,7 @@
-<div class="container-about-us">
-    <div class="container-left">
-        <h2>เกี่ยวกับเรา</h2>
-        <p>
+<div class="flex flex-1 justify-around items-center w-full px-16 py-12 gap-8 bg-white">
+    <div class="flex-1">
+        <h2 class="text-2xl">เกี่ยวกับเรา</h2>
+        <p class="text-xl">
             ยินดีต้อนรับสู่ [GameSeling] แหล่งรวมคีย์เกมแท้คุณภาพในราคาสุดคุ้ม!
             เราเป็นร้านค้าออนไลน์ที่มุ่งมั่นให้บริการเกมเมอร์ทุกระดับด้วยคีย์เกมแท้ 100% จากผู้จัดจำหน่ายที่เชื่อถือได้ ไม่ว่าจะเป็น Steam, Origin, Uplay, Battle.net หรือแพลตฟอร์มอื่น ๆ เราพร้อมให้บริการตลอด 24 ชั่วโมงทุกวันไม่มีวันหยุด
 
@@ -13,7 +13,7 @@
             เลือกเกมที่คุณชอบ แล้วไปสนุกกันได้เลย!
         </p>
     </div>
-    <div class="container-right">
+    <div class="flex-1">
         <img src="./assets/img/people.jpg" alt="people">
     </div>
     
