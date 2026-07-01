@@ -1,43 +1,45 @@
-<div class="container-register">
-    <div class="card-left">
-        <img src="./assets/img/sadCat.jpg" alt="sadCat">
+<div class="flex grow justify-center items-center">
+    <div class="w-2xl">
+        <img class="rounded-s-2xl"src="./assets/img/sadCat.jpg" alt="sadCat">
     </div>
-    <div class="card-right">
-        <h2>สมัครสมาชิก</h2>
+    <div class="w-2xl rounded-e-2xl">
+        <h2 class="text-center text-[50px] text-blue-900">สมัครสมาชิก</h2>
         
         <form novalidate onsubmit="register(event)" method="post">
-            <div class="input-container">
+            <div class="text-[19px] pl-50 pr-50">
 
-                <fieldset>
+                <fieldset class="border border-blue-900 rounded-xl">
                     <legend for="firstname">ชื่อ</legend>
-                    <input type="text" name="firstname" id="firstname" required>
+                    <input class="w-full focus:outline-none pl-2" type="text" name="firstname" id="firstname" required>
                 </fieldset>
 
-                <fieldset>
+                <fieldset class="border border-blue-900 rounded-xl">
                     <legend for="lastname">นามสกุล</legend>
-                    <input type="text" name="lastname" id="lastname" required>
+                    <input class="w-full focus:outline-none pl-2" type="text" name="lastname" id="lastname" required>
                 </fieldset>
 
-                <p class="email-wrong-format" id="emailWrongFormat">รูปแบบอีเมลไม่ถูกต้อง</p>
-                <fieldset>
+                <p class="hidden text-red-900" id="emailWrongFormat">รูปแบบอีเมลไม่ถูกต้อง</p>
+                <fieldset class="border border-blue-900 rounded-xl">
                     <legend for="email">Email</legend>
-                    <input type="text" name="email" id="email" required>
+                    <input class="w-full focus:outline-none pl-2" type="text" name="email" id="email" required>
                 </fieldset>
 
-                <fieldset>
+                <fieldset class="border border-blue-900 rounded-xl">
                     <legend for="password">รหัสผ่าน</legend>
-                    <input type="password" name="password" id="password" autocomplete="off" required>
+                    <input class="w-full focus:outline-none pl-2" type="password" name="password" id="password" autocomplete="off" required>
                 </fieldset>
 
-                <fieldset>
+                <fieldset class="border border-blue-900 rounded-xl">
                     <legend for="cpassword">ยืนยันรหัสผ่าน</legend>
-                    <input type="password" name="cpassword" id="cpassword" autocomplete="off" required>
+                    <input class="w-full focus:outline-none pl-2" type="password" name="cpassword" id="cpassword" autocomplete="off" required>
                 </fieldset>
-                <a href="#">ลืมรหัสผ่าน?</a><br>
+                <a class="block text-right mt-5 text-gray-900 " href="#">ลืมรหัสผ่าน?</a><br>
+                
+                <button class="block mx-auto cursor-pointer pl-10 pr-10 pt-5 pb-5 rounded-3xl border-none bg-blue-900 text-[20px] text-white" type="submit">สมัครสมาชิก</button>
+                <span class="block text-center">or</span>
+                <p class="block text-center">มีบัญชีอยู่แล้ว? <a class="text-blue-900"href="./?views=login">ล็อคอิน</a></p>
             </div>
-            <button type="submit">สมัครสมาชิก</button>
-            <span class="with-line">or</span>
-            <p>มีบัญชีอยู่แล้ว?<a href="./?page=login">ล็อคอิน</a></p>
+            
         </form>
     </div>
 </div>
