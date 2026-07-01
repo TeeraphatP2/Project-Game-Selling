@@ -3,7 +3,7 @@
 <?php include './includes/head.php'; ?>
 <body class="flex flex-col min-h-full">
     <?php include './includes/navbar.php'; ?>
-    <main class="grow">
+    <main class="flex-1 flex flex-col">
         <?php 
         // require './helpers/dd.php';
         ?>
