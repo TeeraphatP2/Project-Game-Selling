@@ -7,7 +7,7 @@
             <ul class="flex justify-center items-center h-full">
                 <li class="pl-5 pr-5"><a href="./">หน้าแรก</a></li>
                 <li class="pl-5 pr-5"><a href="#">นโยบาย</a></li>
-                <li class="pl-5 pr-5"><a href="./?page=about">เกี่ยวกับ</a></li>
+                <li class="pl-5 pr-5"><a href="./?views=about">เกี่ยวกับ</a></li>
             </ul>
         </div>
     </div>

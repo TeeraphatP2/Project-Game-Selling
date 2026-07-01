@@ -3,9 +3,9 @@ $bgPage                 = parse_url($_SERVER['REQUEST_URI'])['query'] ?? "";
 
 $routesBackground = [
         ''              => '<link rel="stylesheet" href="' . BASE_URL . '/assets/css/frontend/backgroundBody/homepage.css">',
-        'page=about'    => '<link rel="stylesheet" href="' . BASE_URL . '/assets/css/frontend/backgroundBody/homepage.css">',
-        'page=login'    => '<link rel="stylesheet" href="' . BASE_URL . '/assets/css/frontend/backgroundBody/auth.css">',
-        'page=register' => '<link rel="stylesheet" href="' . BASE_URL . '/assets/css/frontend/backgroundBody/auth.css">'
+        'views=about'    => '<link rel="stylesheet" href="' . BASE_URL . '/assets/css/frontend/backgroundBody/homepage.css">',
+        'views=login'    => '<link rel="stylesheet" href="' . BASE_URL . '/assets/css/frontend/backgroundBody/auth.css">',
+        'views=register' => '<link rel="stylesheet" href="' . BASE_URL . '/assets/css/frontend/backgroundBody/auth.css">'
 ];
 
 if(array_key_exists($bgPage, $routesBackground)) {

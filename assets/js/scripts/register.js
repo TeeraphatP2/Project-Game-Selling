@@ -10,11 +10,11 @@ async function register(event){
     const checkEmailFormat  = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     if(!checkEmailFormat.test(email)) {
-        emailWrongFormat.classList.add('show');
+        emailWrongFormat.classList.remove('hidden');
         return;
         
     }
-    emailWrongFormat.classList.remove('show');
+    emailWrongFormat.classList.add('hidden');
 
     try{
         const response      = await fetch('./api.php?action=register', {
