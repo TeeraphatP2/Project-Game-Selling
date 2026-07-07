@@ -29,16 +29,16 @@ class AuthMiddleware {
         $authHeader = $headers['Authorization'];
 
         if(empty($authHeader)){
-            throw new Exception('UNTHORIZED');
+            throw new Exception('UNAUTHORIZED');
         }
         if(!str_starts_with($authHeader, 'Bearer ')){
-            throw new Exception('UNTHORIZED');
+            throw new Exception('UNAUTHORIZED');
         }
 
         $token = trim(substr($authHeader, 7));
 
         if(empty($token)){
-            throw new Exception('UNTHORIZED');
+            throw new Exception('UNAUTHORIZED');
         }
         return $token;
     }
