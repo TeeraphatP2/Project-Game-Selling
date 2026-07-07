@@ -22,7 +22,7 @@ Class Response{
         'EMPTY_INPUT_FORM'           => 'กรุณากรอกให้มูลให้ครบ',
         'MISSING_REQUIRED_ENV'       => 'ไม่พบ ENV ที่เรียก',
         'ROUTE_NOT_FOUND'            => 'ไม่พบคลาสที่เรียกใช้จาก Api',
-        'UNTHORIZED'                 => 'กรุณาเข้าสู่ระบบก่อน'
+        'UNAUTHORIZED'               => 'กรุณาเข้าสู่ระบบก่อน'
 
     ];
 
