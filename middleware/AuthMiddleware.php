@@ -26,7 +26,7 @@ class AuthMiddleware {
     {
         $headers = getallheaders();
 
-        $authHeader = $headers['Authorization'];
+        $authHeader = $headers['Authorization'] ?? '';
 
         if(empty($authHeader)){
             throw new Exception('UNAUTHORIZED');
