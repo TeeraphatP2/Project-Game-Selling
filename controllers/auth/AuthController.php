@@ -54,7 +54,12 @@ class AuthController
 
             //login สำเร็จ
             if ($result['message'] === 'LOGIN_SUCCESS') {
-                Response::success($result['message'], $result['data']);
+                // setcookie(
+                //     'refreshToken',
+                //     $result['data'][0]
+                    
+                // );
+                Response::success($result['message'], $result['data'][0]);
                 exit();
             }
         exit();
