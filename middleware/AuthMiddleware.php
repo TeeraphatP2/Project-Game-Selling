@@ -43,29 +43,4 @@ class AuthMiddleware {
         return $token;
     }
 
-    //  // ✅ ใช้กับ route ที่จำกัดเฉพาะ role เช่น admin
-    // public function handleWithRole(string ...$allowedRoles): object
-    // {
-    //     $decoded  = $this->handle();
-    //     $userRole = $decoded->role ?? null;
-
-    //     if (!in_array($userRole, $allowedRoles)) {
-    //         Response::error('FORBIDDEN');
-    //     }
-
-    //     return $decoded;
-    // }
-
-     // ✅ ใช้กับ route ที่จำกัดเฉพาะ role เช่น admin
-    // public function handleWithRole(string ...$allowedRoles): object
-    // {
-    //     $decoded  = $this->handle();
-    //     $userRole = $decoded->role ?? null;
-
-    //     if (!in_array($userRole, $allowedRoles)) {
-    //         Response::error('FORBIDDEN');
-    //     }
-
-    //     return $decoded;
-    // }
 }
