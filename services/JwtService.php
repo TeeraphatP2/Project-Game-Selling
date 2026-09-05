@@ -9,7 +9,7 @@ use Firebase\JWT\SignatureInvalidException;
 use RuntimeException;
 use InvalidArgumentException;
 use App\Helpers\Response;
-
+use App\Repositories\RefreshTokenRepository;
 // สร้าง Json Web service
 Class JwtService {
     private string $accessSecretKey;
@@ -66,13 +66,14 @@ Class JwtService {
     private function encode(array $claims, string $accessKey, int $accessTime): string 
     {
         $now = time();
+        $expireAt = $now + $accessTime;
 
         $payload = array_merge($claims, [
             'iat' => $now,
             'nbf' => $now,
-            'exp' => $now + $accessTime
+            'exp' => $expireAt
         ]);
-
+    
         return JWT::encode($payload, $accessKey, 'HS256');
     }
 
@@ -89,4 +90,5 @@ Class JwtService {
             Response::error('TOKEN_INVALID', $e->getMessage());
         }
     }
+
 }
