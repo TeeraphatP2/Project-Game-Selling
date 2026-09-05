@@ -87,3 +87,14 @@ CREATE TABLE payments (
     PRIMARY KEY (paymentId),
     FOREIGN KEY (orderId) REFERENCES orders(orderId)
 )
+
+CREATE TABLE usersRefreshToken (
+    usersRefreshTokenId INT NOT NULL UNIQUE AUTO_INCREMENT COMMENT 'รหัสรีเซ็ตโทเค็น',
+    tokenHash VARCHAR(255) NOT NULL COMMENT 'โทเค็นสำหรับรีเซ็ตที่ถูกเข้ารหัส',
+    revokedAt TIMESTAMP NULL COMMENT 'เวลาที่โทเค็นถูกยกเลิก',
+    createdAt TIMESTAMP NOT NULL COMMENT 'เวลาที่โทเค็นถูกสร้าง',
+    expiresAt TIMESTAMP NOT NULL COMMENT 'เวลาที่โทเค็นหมดอายุ',
+    userId INT NOT NULL COMMENT 'รหัสผู้ใช้',
+    PRIMARY KEY (usersRefreshTokenId),
+    FOREIGN KEY (userId) REFERENCES users(userId) 
+)
