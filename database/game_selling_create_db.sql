@@ -20,7 +20,7 @@ CREATE TABLE carts (
 	cartId INT NOT NULL AUTO_INCREMENT COMMENT 'รหัสตะกร้าสินค้า',
     createdAt DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT 'วันเวลาที่ตะกร้าถูกสร้าง',
     status ENUM('finished', 'not finished') DEFAULT 'not finished' NOT NULL COMMENT 'สถานะของตะกร้า',
-    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT 'วันเวลาที่ตะกร้าถูกอัปเดต',
+    updatedAt DATETIME ON UPDATE CURRENT_TIMESTAMP NULL COMMENT 'วันเวลาที่ตะกร้าถูกอัปเดต',
     userId INT NOT NULL COMMENT 'รหัสผู้ใช้',
 	PRIMARY KEY (cartId),
 	FOREIGN KEY (userId) REFERENCES users(userId)
@@ -33,6 +33,27 @@ CREATE TABLE cartItems (
     productId INT UNIQUE NOT NULL COMMENT 'รหัสสินค้า',
     PRIMARY KEY (cartItemId),
     FOREIGN KEY (cartId) REFERENCES carts(cartId),
+    FOREIGN KEY (productId) REFERENCES products(productId)
+);
+
+CREATE TABLE orders (
+    orderId INT NOT NULL AUTO_INCREMENT COMMENT 'รหัสคำสั่งซื้อ',
+    orderStatus ENUM('PENDING_VERIFICATION', 'COMPLETED', 'REJECTED') DEFAULT 'PENDING_VERIFICATION' NOT NULL COMMENT 'สถานะคำสั่งซื้อ',
+    totalAmount DECIMAL(8, 2) NOT NULL COMMENT 'ราคารวมของคำสั่งซื้อ',
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'วันเวลาที่สั่งซิ้อสินค้า',
+    userId INT NOT NULL COMMENT 'รหัสผู้ใช้',
+    PRIMARY KEY (orderId),
+    FOREIGN KEY (userId) REFERENCES users(userId)
+);
+
+CREATE TABLE ordersItems (
+    orderItemId INT NOT NULL AUTO_INCREMENT COMMENT 'รหัสรายการคำสั่งซื้อ',
+    quantity TINYINT(255) NOT NULL COMMENT 'จำนวนรวมสินค้าเดียวกันที่สั่งซื้อ',
+    unitPrice DECIMAL(8, 2) NOT NULL COMMENT 'ราคารวมสินค้าเดียวกันที่สั่งซื้อ',
+    orderId INT NOT NULL COMMENT 'รหัสคำสั่งซื้อ',
+    productId INT NOT NULL COMMENT 'รหัสผู้ใช้',
+    PRIMARY KEY (orderItemId),
+    FOREIGN KEY (orderId) REFERENCES orders(orderId),
     FOREIGN KEY (productId) REFERENCES products(productId)
 );
 
@@ -57,7 +78,7 @@ CREATE TABLE gameDetails (
     productId INT COMMENT 'รหัสสินค้า',
     PRIMARY KEY (gameDetailId),
     FOREIGN KEY (productId) REFERENCES products(productId)
-)
+);
 
 CREATE TABLE promotions (
 	promotionId INT NOT NULL AUTO_INCREMENT COMMENT 'รหัสลดราคา',
@@ -67,7 +88,7 @@ CREATE TABLE promotions (
     promotionEndDate DATETIME NOT NULL COMMENT 'วันเวลาที่หยุดลดราคา',
     createAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'วันเวลาที่สร้างการลดราคา',
     PRIMARY KEY (promotionId)
-)
+);
 
 CREATE TABLE productPromotions (
 	productId INT NOT NULL COMMENT 'รหัสสินค้า',
@@ -75,25 +96,36 @@ CREATE TABLE productPromotions (
 	PRIMARY KEY (productId, promotionId),
     FOREIGN KEY (productId) REFERENCES products(productId),
     FOREIGN KEY (promotionId) REFERENCES promotions(promotionId) 
-)
+);
 
 CREATE TABLE payments (
 	paymentId INT NOT NULL AUTO_INCREMENT COMMENT 'รหัสการชำระเงิน',
     paymentSlip MEDIUMBLOB NOT NULL COMMENT 'สลิปการโอนเงิน',
     paymentStatus ENUM('รอตรวจสอบ', 'ชำระเงินแล้ว', 'ชำระเงินไม่สำเร็จ') DEFAULT 'รอตรวจสอบ' NOT NULL COMMENT 'สถานะการชำระเงิน',
     amount DECIMAL(8, 2) NOT NULL COMMENT 'ราคาที่ทำการชำระเงิน',
-    paidAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'วันเวลาที่ชำระเงิน',
+    paidAt DATETIME NOT NULL COMMENT 'วันเวลาที่ชำระเงิน',
     orderId INT NOT NULL COMMENT 'รหัสคำสั่งซิ้อ',
     PRIMARY KEY (paymentId),
     FOREIGN KEY (orderId) REFERENCES orders(orderId)
-)
+);
+
+CREATE TABLE gameKeys (
+    gameKeyId INT NOT NULL AUTO_INCREMENT COMMENT 'รหัสคีย์เกม',
+    gameKey CHAR(255) NOT NULL UNIQUE COMMENT 'คีย์เกมสตรีม',
+    isUsed ENUM('yes', 'no') DEFAULT 'no' COMMENT 'สถานะของคีย์เกมถูกใช้หรือยัง',
+    productId INT NOT NULL COMMENT 'รหัสสินค้า',
+    orderItemId INT NOT NULL COMMENT 'รหัสรายการคำสั่งซิ้อ',
+    PRIMARY KEY (gameKeyId),
+    FOREIGN KEY (productId) REFERENCES products(productId),
+    FOREIGN KEY (orderItemId) REFERENCES ordersItems(orderItemId) 
+);
 
 CREATE TABLE usersRefreshToken (
     usersRefreshTokenId INT NOT NULL UNIQUE AUTO_INCREMENT COMMENT 'รหัสรีเซ็ตโทเค็น',
     tokenHash VARCHAR(255) NOT NULL COMMENT 'โทเค็นสำหรับรีเซ็ตที่ถูกเข้ารหัส',
-    revokedAt TIMESTAMP NULL COMMENT 'เวลาที่โทเค็นถูกยกเลิก',
-    createdAt TIMESTAMP NOT NULL COMMENT 'เวลาที่โทเค็นถูกสร้าง',
-    expiresAt TIMESTAMP NOT NULL COMMENT 'เวลาที่โทเค็นหมดอายุ',
+    revokedAt DATETIME NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'เวลาที่โทเค็นถูกยกเลิก',
+    createdAt DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'เวลาที่โทเค็นถูกสร้าง',
+    expiresAt DATETIME NOT NULL COMMENT 'เวลาที่โทเค็นหมดอายุ',
     userId INT NOT NULL COMMENT 'รหัสผู้ใช้',
     PRIMARY KEY (usersRefreshTokenId),
     FOREIGN KEY (userId) REFERENCES users(userId) 
