@@ -25,13 +25,18 @@ Class AuthService{
             return ['message' => 'INVALID_PASSWORD'];
             
         }
-        return ['message'   => 'LOGIN_SUCCESS', 'data' => [$this->jwtService->createAccessToken([
-            'sub' => $user['userId'],
-            'iss' => 'GameSelling',
-            'aud' => $user['firstname']
-            ]), $this->jwtService->createRefreshToken($user['userId'])]];
-    }
 
+        $algo                       = PASSWORD_BCRYPT;       
+        $options = [
+        // Increase the bcrypt cost from 12 to 13.
+            'cost'                  => 13,
+        ];
+
+        $refreshToken = $this->jwtService->createRefreshToken($user['userId']);
+        $refreshTokenHash = password_hash($refreshToken, $algo, $options);
+        return ['message' => 'LOGIN_SUCCESS', 'data' => [$this->jwtService->createAccessToken([$user['userId'], $user['firstname']]), $refreshToken]];
+    }
+    
     // ระบบสมัครสมาชิก
     public function register(array $userData): array
     {
