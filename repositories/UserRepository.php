@@ -29,8 +29,8 @@ class UserRepository
             return $userData;
         }catch (PDOException $e) {
     // ส่ง error code พร้อมข้อความ error เมื่อ query ผิดผลาด
-            throw new PDOException('PDO_EXCEPTION_ERROR', previous: $e);
-            // throw new \RuntimeException('PDO_EXCEPTION_ERROR', 0, $e);
+            throw new PDOException('PDO_EXCEPTION_ERRORD', previous: $e);
+           
         }
     }
 
