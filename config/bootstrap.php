@@ -12,6 +12,7 @@ use App\Services\AuthService;
 use App\Config\Container;
 use App\Services\JwtService;
 use App\Helpers\ExceptionHandler;
+use App\Repositories\RefreshTokenRepository;
 // ตรวจและส่ง Exception
 set_exception_handler([ExceptionHandler::class, 'handle']);
 
@@ -38,8 +39,10 @@ $container->bind(JwtService::class, function() {
 $container->bind(AuthService::class, function() use($container) {
     $userRepo       = $container->resolve(UserRepository::class);
     $jwtService     = $container->resolve(JwtService::class);
-    return new AuthService($userRepo, $jwtService);
+    $refreshTokenRepo = $container->resolve(RefreshTokenRepository::class);
+    return new AuthService($userRepo, $jwtService, $refreshTokenRepo);
 });
+
 
 // เก็บการเรียกใช้ AuthService
 $container->bind(AuthController::class, function() use($container) {
