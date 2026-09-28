@@ -5,15 +5,18 @@ Class AuthService{
 
     private \App\Repositories\UserRepository $userRepo;
     private \App\Services\JwtService $jwtService;
-
-    public function __construct(\App\Repositories\UserRepository $userRepo, \App\Services\JwtService $jwtService) {
+    private \App\Repositories\RefreshTokenRepository $refreshTokenRepo;
+    public function __construct(\App\Repositories\UserRepository $userRepo, \App\Services\JwtService $jwtService, \App\Repositories\RefreshTokenRepository $refreshTokenRepo) 
+    {
         $this->userRepo             = $userRepo;
         $this->jwtService           = $jwtService;
-    }
+        $this->refreshTokenRepo     = $refreshTokenRepo;
+    }   
 
     // ระบบล็อคอิน
     public function login(string $email, string $password): array
     {
+        
         $user                       = $this->userRepo->findByEmail($email);
 
         if($user === null){
@@ -32,9 +35,15 @@ Class AuthService{
             'cost'                  => 13,
         ];
 
-        $refreshToken = $this->jwtService->createRefreshToken($user['userId']);
+        $refreshTokenData = $this->jwtService->createRefreshToken($user['userId']);
+        $refreshToken = $refreshTokenData[0];
+        $expireAt = $refreshTokenData[1];
+        $userId = $refreshTokenData[2];
         $refreshTokenHash = password_hash($refreshToken, $algo, $options);
-        return ['message' => 'LOGIN_SUCCESS', 'data' => [$this->jwtService->createAccessToken([$user['userId'], $user['firstname']]), $refreshToken]];
+
+        $this->refreshTokenRepo->insertToDatabase($refreshTokenHash, $expireAt, $userId);
+        
+        return ['message' => 'LOGIN_SUCCESS', 'data' => [$this->jwtService->createAccessToken([$user['userId'], $user['firstname']])]];
     }
     
     // ระบบสมัครสมาชิก
