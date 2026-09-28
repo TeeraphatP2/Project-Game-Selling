@@ -35,6 +35,11 @@ $container->bind(JwtService::class, function() {
     return new JwtService();
 });
 
+$container->bind(RefreshTokenRepository::class, function() use($container){
+    $connection = $container->resolve(Connection::class);
+    return new RefreshTokenRepository($connection);
+}); 
+
 // เก็บการเรียกใช้ AuthService
 $container->bind(AuthService::class, function() use($container) {
     $userRepo       = $container->resolve(UserRepository::class);
