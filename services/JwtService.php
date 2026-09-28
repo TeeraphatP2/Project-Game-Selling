@@ -48,7 +48,8 @@ Class JwtService {
     public function createRefreshToken(int|string $userId): array
     {
         
-        return $this->encode(['sub' => $userId], $this->refreshSecretKey, $this->refreshTime);
+        $refreshTokenData = $this->encode(['sub' => $userId], $this->refreshSecretKey, $this->refreshTime);
+        return [$refreshTokenData[0], $refreshTokenData[1], $userId];
     }
 
     //ตรวจสอบ Access token
@@ -67,15 +68,15 @@ Class JwtService {
     private function encode(array $claims, string $accessKey, int $accessTime): array 
     {
         $now = time();
-        $expireAt = $now + $accessTime;
+        $expiresAt = $now + $accessTime;
 
         $payload = array_merge($claims, [
             'iat' => $now,
             'nbf' => $now,
-            'exp' => $expireAt
+            'exp' => $expiresAt
         ]);
     
-        return [JWT::encode($payload, $accessKey, 'HS256'), $expireAt];
+        return [JWT::encode($payload, $accessKey, 'HS256'), $expiresAt];
     }
 
     //ระบบตรวจสอบโทเค็น
