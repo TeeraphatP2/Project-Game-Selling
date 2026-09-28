@@ -43,23 +43,27 @@ class AuthController
             $result = $this->authService->login($email, $password);
 
             if ($result['message'] === 'EMAIL_NOT_FOUND') {
+                
                 Response::error($result['message']);
                 exit();
             }
 
             if ($result['message'] === 'INVALID_PASSWORD') {
+                
                 Response::error($result['message']);
             }
 
 
             //login สำเร็จ
             if ($result['message'] === 'LOGIN_SUCCESS') {
+
                 // setcookie(
                 //     'refreshToken',
                 //     $result['data'][0]
                     
                 // );
-                Response::success($result['message'], $result['data'][0]);
+
+                Response::success($result['message'], $result['data']);
                 exit();
             }
         exit();

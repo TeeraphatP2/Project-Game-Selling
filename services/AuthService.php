@@ -5,15 +5,18 @@ Class AuthService{
 
     private \App\Repositories\UserRepository $userRepo;
     private \App\Services\JwtService $jwtService;
-
-    public function __construct(\App\Repositories\UserRepository $userRepo, \App\Services\JwtService $jwtService) {
+    private \App\Repositories\RefreshTokenRepository $refreshTokenRepo;
+    public function __construct(\App\Repositories\UserRepository $userRepo, \App\Services\JwtService $jwtService, \App\Repositories\RefreshTokenRepository $refreshTokenRepo) 
+    {
         $this->userRepo             = $userRepo;
         $this->jwtService           = $jwtService;
-    }
+        $this->refreshTokenRepo     = $refreshTokenRepo;
+    }   
 
     // ระบบล็อคอิน
     public function login(string $email, string $password): array
     {
+        
         $user                       = $this->userRepo->findByEmail($email);
 
         if($user === null){
@@ -25,13 +28,24 @@ Class AuthService{
             return ['message' => 'INVALID_PASSWORD'];
             
         }
-        return ['message'   => 'LOGIN_SUCCESS', 'data' => [$this->jwtService->createAccessToken([
-            'sub' => $user['userId'],
-            'iss' => 'GameSelling',
-            'aud' => $user['firstname']
-            ]), $this->jwtService->createRefreshToken($user['userId'])]];
-    }
 
+        $algo                       = PASSWORD_BCRYPT;       
+        $options = [
+        // Increase the bcrypt cost from 12 to 13.
+            'cost'                  => 13,
+        ];
+
+        $refreshTokenData = $this->jwtService->createRefreshToken($user['userId']);
+        $refreshToken = $refreshTokenData[0];
+        $expireAt = $refreshTokenData[1];
+        $userId = $refreshTokenData[2];
+        $refreshTokenHash = password_hash($refreshToken, $algo, $options);
+
+        $this->refreshTokenRepo->insertToDatabase($refreshTokenHash, $expireAt, $userId);
+        
+        return ['message' => 'LOGIN_SUCCESS', 'data' => [$this->jwtService->createAccessToken([$user['userId'], $user['firstname']])]];
+    }
+    
     // ระบบสมัครสมาชิก
     public function register(array $userData): array
     {

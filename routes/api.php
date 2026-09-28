@@ -2,7 +2,7 @@
 use App\Helpers\Response;
 
 // เก็บ request method
-$method = $_SERVER['REQUEST_METHOD'];
+$method = $_SERVER['REQUEST_METHOD'] ?? '';
 
 // เก็บ query server
 parse_str(parse_url($_SERVER['REQUEST_URI'])['query'], $params);

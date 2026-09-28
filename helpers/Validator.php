@@ -23,7 +23,7 @@ class Validator{
     }
 
     // ยืนยันรหัสผ่าน
-    public static function isPasswordMatch(string $password, string $cpassword){
+    public static function isPasswordMatch(string $password, string $cpassword):bool {
         if($password !== $cpassword){
             return false;
         }else{
@@ -32,7 +32,7 @@ class Validator{
     }
 
     // ตรวจ input ว่ามีค่าว่างไหม
-    public static function isEmptyInput($data){
+    public static function isEmptyInput($data):bool {
         if(!empty($data)){
             return false;
         }else{

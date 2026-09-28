@@ -9,7 +9,7 @@ use Firebase\JWT\SignatureInvalidException;
 use RuntimeException;
 use InvalidArgumentException;
 use App\Helpers\Response;
-
+use App\Repositories\RefreshTokenRepository;
 // สร้าง Json Web service
 Class JwtService {
     private string $accessSecretKey;
@@ -41,13 +41,15 @@ Class JwtService {
     public function createAccessToken(array $claims): string
     {
 
-        return $this->encode($claims, $this->accessSecretKey, $this->accessTime);
+        return $this->encode($claims, $this->accessSecretKey, $this->accessTime)[0];
     }
 
     // รีเซ็ทโทเค็น
-    public function createRefreshToken(int|string $userId): string
+    public function createRefreshToken(int|string $userId): array
     {
-        return $this->encode(['sub' => $userId], $this->refreshSecretKey, $this->refreshTime);
+        
+        $refreshTokenData = $this->encode(['sub' => $userId], $this->refreshSecretKey, $this->refreshTime);
+        return [$refreshTokenData[0], $refreshTokenData[1], $userId];
     }
 
     //ตรวจสอบ Access token
@@ -63,17 +65,18 @@ Class JwtService {
     }
 
     //ระบบสร้างโทเค็น
-    private function encode(array $claims, string $accessKey, int $accessTime): string 
+    private function encode(array $claims, string $accessKey, int $accessTime): array 
     {
         $now = time();
+        $expiresAt = $now + $accessTime;
 
         $payload = array_merge($claims, [
             'iat' => $now,
             'nbf' => $now,
-            'exp' => $now + $accessTime
+            'exp' => $expiresAt
         ]);
-
-        return JWT::encode($payload, $accessKey, 'HS256');
+    
+        return [JWT::encode($payload, $accessKey, 'HS256'), $expiresAt];
     }
 
     //ระบบตรวจสอบโทเค็น
@@ -89,4 +92,5 @@ Class JwtService {
             Response::error('TOKEN_INVALID', $e->getMessage());
         }
     }
+
 }

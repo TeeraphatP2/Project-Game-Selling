@@ -9,12 +9,17 @@ Class Connection {
 
     public function __construct(array $config){
         $dsn = 'mysql:'. http_build_query($config, '', ';');
+        $options = [
+            \PDO::MYSQL_ATTR_INIT_COMMAND => "SET time_zone = '+00:00'",
+            \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
+        ];
         try{
-            $this->pdo = new \PDO($dsn, 'root', '');
+            $this->pdo = new \PDO($dsn, 'root', '', $options);
+            
         }catch(\PDOException $e){
             
             throw new \PDOException('CONNECT_DATABASE_ERROR', previous: $e);
-            //throw new \RuntimeException('CONNECT_DATABASE_ERROR', 0, $e);
+            
         }
     }
 
