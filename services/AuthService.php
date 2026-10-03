@@ -36,14 +36,15 @@ Class AuthService{
         ];
 
         $refreshTokenData = $this->jwtService->createRefreshToken($user['userId']);
-        $refreshToken = $refreshTokenData[0];
-        $expireAt = $refreshTokenData[1];
-        $userId = $refreshTokenData[2];
+        $refreshToken = $refreshTokenData['refreshToken'];
+        $expireAt = $refreshTokenData['refreshTokenExpiresAt'];
+        $userId = $refreshTokenData['userId'];
         $refreshTokenHash = password_hash($refreshToken, $algo, $options);
 
         $this->refreshTokenRepo->insertToDatabase($refreshTokenHash, $expireAt, $userId);
         
-        return ['message' => 'LOGIN_SUCCESS', 'data' => [$this->jwtService->createAccessToken([$user['userId'], $user['firstname']])]];
+        $accessToken = $this->jwtService->createAccessToken([$user['userId'], $user['firstname']]);
+        return ['message' => 'LOGIN_SUCCESS', 'data' => [$accessToken]];
     }
     
     // ระบบสมัครสมาชิก
