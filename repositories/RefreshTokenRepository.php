@@ -12,7 +12,7 @@ Class RefreshTokenRepository {
     {
         $this->pdo = $pdo;
     }
-    public function insertToDatabase(string $refreshTokenHash, int $expireAt, string $userId)
+    public function insertToDatabase(string $refreshTokenHash, int $expireAt, int $userId)
     {
         $expiredAt = date('Y:m:d H:i:s', $expireAt);
         try{
